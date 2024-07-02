@@ -1,24 +1,12 @@
-:root {
-    --modal-duration: 0.8s;
-}
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-/* Landing Page */
+/* LANDING PAGE */
 
 body {
-    display: flex;
-    flex-direction: column;
     font-family: "DM Sans", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
-    font-size: 18px;
-    max-width: 1300px;
-    margin: 0 auto;
+    font-size: var(--font-size-base);
 }
 
 p {
@@ -26,40 +14,51 @@ p {
     padding: 0.5vw;
 }
 
-img {
-    padding-right: 1rem;
-}
+/*img {*/
+/*    padding-right: 1rem;*/
+/*}*/
 
+/*HEADER*/
 .top-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
     overflow: hidden;
-    margin: 3.5%;
+    /*margin: 3.5%;*/
+    margin-bottom: 84px;
+    padding: 53px 54px 0 100px;
 }
 
-.header-logo {
-    float: left;
+.header-logo img {
+    /*float: left;*/
+    width: 277px;
 }
 
 .main-navbar {
-    float: right;
+    /*display: flex;*/
+    /*gap: 13px;*/
+    /*float: right;*/
 }
 
 .top-nav a {
-    float: left;
-    display: block;
-    color: #000000;
-    text-align: center;
-    padding: 12px 12px;
-    margin: 5px;
+    /*float: left;*/
+    /*display: block;*/
+    color: #000;
+    /*text-align: center;*/
+    padding: 9px 13px;
+    /*margin: 5px;*/
     text-decoration: none;
-    font-size: 20px;
-    font-family: Roboto, sans-serif;
+    font-size: var(--font-size-base);
+    /*font-family: Roboto, sans-serif;*/
+    font-weight: 500;
 }
 
 .top-nav a:hover,
 .top-nav a.active {
     background-color: #ff0000;
     color: #ffffff;
-    border-radius: 15px;
+    border-radius: 8px;
 }
 
 .top-nav .icon {
@@ -109,14 +108,15 @@ img {
 }
 
 main {
+    width: 86%;
     font-size: 130%;
     font-weight: bolder;
     color: black;
-    padding-top: 0.5vw;
-    padding-left: 2vw;
-    padding-right: 2vw;
-    margin: 1px 20px 15px;
-    border-radius: 2rem;
+    /*padding-top: 0.5vw;*/
+    /*padding-left: 2vw;*/
+    /*padding-right: 2vw;*/
+    /*margin: 1px 20px 15px;*/
+    /*border-radius: 8px;*/
     text-align: justify;
 
 
@@ -124,30 +124,30 @@ main {
 
 .modal-btn {
     font-size: 145%;
-    background: #fe142f;
+    background: var(--primary-color);
     display: flex;
     margin: auto;
-    padding: 2em;
+    /*padding: 32px;*/
     color: #fff;
-    padding: 0.75rem 2.5rem;
+    /*padding: 0.75rem 2.5rem;*/
     border-radius: 1rem;
     cursor: pointer;
 }
 
 .modal-btn:hover {
-    background: #3876ac;
+    background: var(--secondary-color);
 }
 
 .footer {
     margin: 20px;
     padding: 10px;
-    font-family: var(--font-default);
+    /*font-family: var(--font-default);*/
 }
 
-/* Modal form */
+/* MODAL FORM */
 
 .button {
-    background: #fe142f;
+    background: var(--primary-color);
     margin-top: 0.5em;
     padding: 1em;
     color: #fff;
@@ -157,14 +157,14 @@ main {
 }
 
 .button:hover {
-    background: #3876ac;
+    background: var(--secondary-color);
 }
 
 .smFont {
     font-size: 16px;
 }
 
-.bground {
+.background-modal {
     display: none;
     position: fixed;
     z-index: 1;
@@ -196,7 +196,7 @@ main {
 }
 
 label {
-    font-family: var(--font-default);
+    /*font-family: var(--font-default);*/
     font-size: 17px;
     font-weight: normal;
     display: inline-block;
@@ -205,7 +205,7 @@ label {
 
 input {
     padding: 8px;
-    border: 0.8px solid #ccc;
+    border: 1px solid #ccc;
     outline: none;
 }
 
@@ -348,7 +348,7 @@ input[data-error]::after {
 
 .btn-submit,
 .btn-signup {
-    background: #fe142f;
+    background: var(--primary-color);
     display: block;
     margin: 0 auto;
     border-radius: 7px;
@@ -433,8 +433,9 @@ input[data-error]::after {
 }
 
 .hero-section {
-    min-height: 93vh;
-    border-radius: 10px;
+    /*min-height: 93vh;*/
+    max-width: 1240px;
+    border-radius: 8px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     overflow: hidden;
@@ -484,7 +485,7 @@ input[data-error]::after {
     outline: none;
     text-transform: capitalize;
     font-size: 1.3rem;
-    padding: 15px 23px;
+    padding: 15px 48px;
     margin: 59px 0 0;
 }
 
@@ -494,13 +495,13 @@ input[data-error]::after {
 
 .hero-img img {
     width: 100%;
-    height: 100%;
+    height: 657px;
     display: block;
     padding: 0;
 }
 
 .copyrights {
-    color: #fe142f;
+    color: var(--primary-color);
     padding: 0;
     font-size: 1rem;
     margin: 60px 0 30px;
