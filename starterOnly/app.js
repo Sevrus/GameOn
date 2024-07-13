@@ -39,36 +39,20 @@ function hideModal() {
   modalBg.style.display = "none";
 }
 
-function dataVerification(data,regExp) {
+function dataVerification(data, regExp) {
   return regExp.test(data);
 }
 
-formData["first"].addEventListener("change", function () {
-  let testFirst = dataVerification(this.value, regExpName);
-  // if (!testFirst) {
-  //   this.nextElementSibling.innerHTML = "test";
-  // } else {
-  //   this.nextElementSibling.innerHTML = "";
-  // }
+function addValidationListener(element, regExp, validationMessage, errorMessage) {
+  element.addEventListener("change", function () {
+    let isValid = dataVerification(this.value, regExp);
+    this.nextElementSibling.innerHTML = isValid ? "" : "test";
+  });
+}
 
-  !testFirst ? this.nextElementSibling.innerHTML = "test" : this.nextElementSibling.innerHTML = "";
-});
+addValidationListener(formData["first"], regExpName, "", "test");
+addValidationListener(formData["last"], regExpName, "", "test");
+addValidationListener(formData["birthdate"], regExpBirthDate, "", "test");
+addValidationListener(formData["email"], regExpMail, "", "test");
 
-formData["last"].addEventListener("change", function () {
-  let testLast = dataVerification(this.value, regExpName);
-
-  !testLast ? this.nextElementSibling.innerHTML = "test" : this.nextElementSibling.innerHTML = "";
-});
-
-formData["birthdate"].addEventListener("change", function () {
-  let testBirthDate = dataVerification(this.value, regExpBirthDate);
-
-  !testBirthDate ? this.nextElementSibling.innerHTML = "test" : this.nextElementSibling.innerHTML = "";
-});
-
-formData["email"].addEventListener("change", function () {
-  let testEMail = dataVerification(this.value, regExpMail);
-
-  !testEMail ? this.nextElementSibling.innerHTML = "test" : this.nextElementSibling.innerHTML = "";
-});
 
