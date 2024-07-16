@@ -1,11 +1,15 @@
-// DOM Elements
+import {validate} from "./validateForm.js";
+
 const modalBg = document.querySelector(".background-modal");
 const closeModal = document.querySelector(".close");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const form = document.getElementById("inscription-form");
 const formData = form.elements;
 
-// Event Listeners
+
+/**
+ * Event Listeners
+ */
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 closeModal.addEventListener("click", hideModal);
 
@@ -33,9 +37,11 @@ function hideModal() {
   modalBg.style.display = "none";
 }
 
-// Import the form validation class
-import FormValidator from './FormValidator.js';
-
-// Initialize and validate the form
-const formValidator = new FormValidator(formData, form);
-formValidator.validate();
+/**
+ * Event listener for form submission
+ */
+form.addEventListener('submit', function(event) {
+  if (!validate()) {
+    event.preventDefault();
+  }
+});
