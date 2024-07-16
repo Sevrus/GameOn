@@ -38,10 +38,26 @@ function hideModal() {
 }
 
 /**
+ * Displays the confirmation message
+ */
+function displayConfirmation() {
+  const modalBody = document.querySelector(".modal-body");
+  modalBody.innerHTML = `
+  <p>Merci pour votre inscription</p>
+  <button class="btn-submit button close-modal-btn">Fermer</button>
+  `;
+
+  document.querySelector(".close-modal-btn").addEventListener("click", hideModal);
+}
+
+/**
  * Event listener for form submission
  */
 form.addEventListener('submit', function(event) {
-  if (!validate()) {
+  if (validate()) {
+    event.preventDefault();
+    displayConfirmation();
+  } else {
     event.preventDefault();
   }
 });

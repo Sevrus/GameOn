@@ -16,13 +16,11 @@ p {
 
 small {
     display: block;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
     color: var(--primary-color);
-    font-size: .8rem;
+    font-size: .6rem;
 }
-
-/*img {*/
-/*    padding-right: 1rem;*/
-/*}*/
 
 /*HEADER*/
 .top-nav {
@@ -31,32 +29,19 @@ small {
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
-    /*margin: 3.5%;*/
     margin-bottom: 84px;
     padding: 53px 54px 0 100px;
 }
 
 .header-logo img {
-    /*float: left;*/
     width: 277px;
 }
 
-.main-navbar {
-    /*display: flex;*/
-    /*gap: 13px;*/
-    /*float: right;*/
-}
-
 .top-nav a {
-    /*float: left;*/
-    /*display: block;*/
     color: #000;
-    /*text-align: center;*/
     padding: 9px 13px;
-    /*margin: 5px;*/
     text-decoration: none;
     font-size: var(--font-size-base);
-    /*font-family: Roboto, sans-serif;*/
     font-weight: 500;
 }
 
@@ -118,11 +103,6 @@ main {
     font-size: 130%;
     font-weight: bolder;
     color: black;
-    /*padding-top: 0.5vw;*/
-    /*padding-left: 2vw;*/
-    /*padding-right: 2vw;*/
-    /*margin: 1px 20px 15px;*/
-    /*border-radius: 8px;*/
     text-align: justify;
 
 
@@ -133,9 +113,7 @@ main {
     background: var(--primary-color);
     display: flex;
     margin: auto;
-    /*padding: 32px;*/
     color: #fff;
-    /*padding: 0.75rem 2.5rem;*/
     border-radius: 1rem;
     cursor: pointer;
 }
@@ -147,7 +125,6 @@ main {
 .footer {
     margin: 20px;
     padding: 10px;
-    /*font-family: var(--font-default);*/
 }
 
 /* MODAL FORM */
@@ -202,7 +179,6 @@ main {
 }
 
 label {
-    /*font-family: var(--font-default);*/
     font-size: 17px;
     font-weight: normal;
     display: inline-block;
@@ -245,12 +221,6 @@ input {
     border: 2px solid #e54858;
 }
 
-/*
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
 .checkbox-label,
 .checkbox2-label {
     position: relative;

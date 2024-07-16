@@ -13,11 +13,10 @@ function validate() {
 
     let isValid = true;
     const nameErrorMessage = "Veuillez entrer 2 caractères ou plus.";
-    const borderStyleError = "2px solid #fe142f";
+    const borderStyleError = "2px solid #ff4e60";
     const borderStyleValid = "2px solid #279e7a";
 
     if (!isValidName(formData["first"].value.trim())) {
-        console.log("First name validation failed");
         setError(formData["first"], nameErrorMessage);
         formData["first"].style.border=borderStyleError;
         isValid = false;
@@ -26,7 +25,6 @@ function validate() {
     }
 
     if (!isValidName(formData["last"].value.trim())) {
-        console.log("Last name validation failed");
         setError(formData["last"], nameErrorMessage);
         formData["last"].style.border=borderStyleError;
         isValid = false;
@@ -35,7 +33,6 @@ function validate() {
     }
 
     if (!isValidEmail(formData["mail"].value.trim())) {
-        console.log("Email validation failed");
         setError(formData["mail"], "Veuillez entrer une adresse email valide.");
         formData["mail"].style.border=borderStyleError;
         isValid = false;
@@ -44,7 +41,6 @@ function validate() {
     }
 
     if (!isValidBirthDate(formData["birthdate"].value.trim())) {
-        console.log("Birthdate validation failed");
         setError(formData["birthdate"], "Veuillez entrer une date de naissance.");
         formData["birthdate"].style.border=borderStyleError;
         isValid = false;
@@ -53,7 +49,6 @@ function validate() {
     }
 
     if (isNaN(formData["quantity"].value.trim()) || formData["quantity"].value.trim() === '') {
-        console.log("Quantity validation failed");
         setError(formData["quantity"], "Veuillez entrer un nombre entre 0 et 99.");
         formData["quantity"].style.border=borderStyleError;
         isValid = false;
@@ -69,13 +64,11 @@ function validate() {
         }
     }
     if (!radioChecked) {
-        console.log("Radio button validation failed");
         setError(locationRadios, "Vous devez choisir une option.");
         isValid = false;
     }
 
     if (!checkbox1.checked) {
-        console.log("Checkbox1 validation failed");
         setError(checkbox1, "Vous devez accepter les conditions d'utilisation.");
         isValid = false;
     }
@@ -114,7 +107,7 @@ function setError(field, message) {
  * @returns {boolean}
  */
 function isValidName(name) {
-    const nameRegExp = /^[a-zA-Z- ]{2,30}$/g;
+    const nameRegExp = /^[a-zA-Zà-ÿÀ-ÿ\- ]{2,30}$/g;
     return nameRegExp.test(name);
 }
 
