@@ -4,21 +4,23 @@ const modalBg = document.querySelector(".background-modal");
 const closeModal = document.querySelector(".close");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const form = document.getElementById("inscription-form");
-const formData = form.elements;
-
+const navToggle = document.getElementById("nav-toggle");
 
 /**
  * Event Listeners
  */
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 closeModal.addEventListener("click", hideModal);
+navToggle.addEventListener("click", editNav);
 
 /**
  * Toggles the responsive class on the top navigation element.
  * If the top navigation element has the class "top-nav", adds the class "responsive";
  * otherwise, sets the class to "top-nav".
+ * @param event
  */
-function editNav() {
+function editNav(event) {
+  event.preventDefault();
   const topNavElement = document.getElementById("top-nav");
   topNavElement.className === "top-nav" ? topNavElement.className += " responsive" : topNavElement.className = "top-nav";
 }
