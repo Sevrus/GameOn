@@ -9,12 +9,21 @@ const errorMessage = {
     name: "Veuillez entrer 2 caractères ou plus.",
     email: "Veuillez entrer une adresse email valide.",
     birthdate: "Veuillez entrer une date de naissance.",
-    quantity: "Veuillez entrer un nombre entre 0 et 99."
-}
+    quantity: "Veuillez entrer un nombre entre 0 et 99.",
+    location: "Vous devez choisir une option.",
+    terms: "Vous devez accepter les conditions d'utilisation."
+
+};
+const regExp = {
+    name: /^[a-zA-Zà-ÿÀ-ÿ\- ]{2,30}$/,
+    email: /^[\w-][\w.-]*[\w-]@[\w-][\w.-]*[\w-].[a-z]{2,10}$/,
+    birthdate: /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/,
+    quantity: /^\d{1,2}$/
+};
 
 /**
- *
- * @returns {boolean}
+ * Validate the entire form
+ * @returns {boolean} - True if the form is valid, otherwise false
  */
 function validate() {
     let isValid = true;
@@ -39,14 +48,14 @@ function validate() {
 
     let radioChecked = Array.from(locationRadios).some(radio => radio.checked);
     if (!radioChecked) {
-        setError(locationRadios, "Vous devez choisir une option.");
+        setError(locationRadios, errorMessage.location);
         isValid = false;
     } else {
         clearError(locationRadios);
     }
 
     if (!checkbox1.checked) {
-        setError(checkbox1, "Vous devez accepter les conditions d'utilisation.");
+        setError(checkbox1, errorMessage.terms);
         isValid = false;
     } else {
         clearError(checkbox1);
@@ -56,9 +65,9 @@ function validate() {
 }
 
 /**
- *
- * @param field
- * @param message
+ * Set an error message for a field
+ * @param {HTMLElement|NodeList} field
+ * @param {string} message - The error message to display
  */
 function setError(field, message) {
     let errorElement = getErrorElement(field);
@@ -66,8 +75,8 @@ function setError(field, message) {
 }
 
 /**
- *
- * @param field
+ * Clear the error message for a field
+ * @param {HTMLElement|NodeList} field
  */
 function clearError(field) {
     let errorElement = getErrorElement(field);
@@ -75,9 +84,9 @@ function clearError(field) {
 }
 
 /**
- *
- * @param field
- * @returns {Element}
+ * Get the error message element associated with a field
+ * @param {HTMLElement|NodeList} field
+ * @returns {Element} - The error message element
  */
 function getErrorElement(field) {
     if (field === locationRadios) {
@@ -90,48 +99,36 @@ function getErrorElement(field) {
 }
 
 /**
- *
- * @param name
- * @returns {boolean}
+ * Validate if the name is in the correct format
+ * @param {string} name - The name to validate
+ * @returns {boolean} - True if the name is valid, otherwise false
  */
-function isValidName(name) {
-    const nameRegExp = /^[a-zA-Zà-ÿÀ-ÿ\- ]{2,30}$/;
-    return nameRegExp.test(name);
-}
+const isValidName = name => regExp.name.test(name);
 
 /**
- *
- * @param email
- * @returns {boolean}
+ * Validate if the email is in the correct format
+ * @param {string} email - The email to validate
+ * @returns {boolean} - True if the email is valid, otherwise false
  */
-function isValidEmail(email) {
-    const emailRegExp = /^[\w-][\w.-]*[\w-]@[\w-][\w.-]*[\w-].[a-z]{2,10}$/;
-    return emailRegExp.test(email);
-}
+const isValidEmail = email => regExp.email.test(email);
 
 /**
- *
- * @param birthDate
- * @returns {boolean}
+ * Validate if the birthdate is in the correct format
+ * @param {string} birthDate - The birthdate to validate
+ * @returns {boolean} - True if the birthdate is valid, otherwise false
  */
-function isValidBirthDate(birthDate) {
-    const birthDateRegExp = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-    return birthDateRegExp.test(birthDate);
-}
+const isValidBirthDate = birthDate => regExp.birthdate.test(birthDate);
 
 /**
- *
- * @param quantity
- * @returns {boolean}
+ * Validate if the quantity is in the correct format
+ * @param {string} quantity - The quantity to validate
+ * @returns {boolean} - True if the quantity is valid, otherwise false
  */
-function isValidQuantity(quantity) {
-    const quantityRegEx = /^\d{1,2}$/;
-    return quantityRegEx.test(quantity);
-}
+const isValidQuantity = quantity => regExp.quantity.test(quantity);
 
 /**
- *
- * @param event
+ * Validate a single form field based on its name attribute
+ * @param {Event} event - The input event
  */
 function validateField(event) {
     const field = event.target;
