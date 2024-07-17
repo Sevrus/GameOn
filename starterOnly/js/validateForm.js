@@ -3,18 +3,27 @@ const formData = form.elements;
 const locationRadios = document.getElementsByName('location');
 const checkbox1 = document.getElementById("checkbox1");
 
-const nameErrorMessage = "Veuillez entrer 2 caractères ou plus.";
 const borderStyleError = "2px solid #ff4e60";
 const borderStyleValid = "2px solid #279e7a";
+const errorMessage = {
+    name: "Veuillez entrer 2 caractères ou plus.",
+    email: "Veuillez entrer une adresse email valide.",
+    birthdate: "Veuillez entrer une date de naissance.",
+    quantity: "Veuillez entrer un nombre entre 0 et 99."
+}
 
+/**
+ *
+ * @returns {boolean}
+ */
 function validate() {
     let isValid = true;
     const fieldsToValidate = [
-        { field: formData["first"], validator: isValidName, message: nameErrorMessage },
-        { field: formData["last"], validator: isValidName, message: nameErrorMessage },
-        { field: formData["mail"], validator: isValidEmail, message: "Veuillez entrer une adresse email valide." },
-        { field: formData["birthdate"], validator: isValidBirthDate, message: "Veuillez entrer une date de naissance." },
-        { field: formData["quantity"], validator: isValidQuantity, message: "Veuillez entrer un nombre entre 0 et 99." }
+        { field: formData["first"], validator: isValidName, message: errorMessage.name },
+        { field: formData["last"], validator: isValidName, message: errorMessage.name },
+        { field: formData["mail"], validator: isValidEmail, message: errorMessage.email },
+        { field: formData["birthdate"], validator: isValidBirthDate, message: errorMessage.birthdate },
+        { field: formData["quantity"], validator: isValidQuantity, message: errorMessage.quantity }
     ];
 
     fieldsToValidate.forEach(({ field, validator, message }) => {
@@ -46,16 +55,30 @@ function validate() {
     return isValid;
 }
 
+/**
+ *
+ * @param field
+ * @param message
+ */
 function setError(field, message) {
     let errorElement = getErrorElement(field);
     errorElement.textContent = message;
 }
 
+/**
+ *
+ * @param field
+ */
 function clearError(field) {
     let errorElement = getErrorElement(field);
     errorElement.textContent = "";
 }
 
+/**
+ *
+ * @param field
+ * @returns {Element}
+ */
 function getErrorElement(field) {
     if (field === locationRadios) {
         return document.querySelector(".small-location");
@@ -66,34 +89,58 @@ function getErrorElement(field) {
     }
 }
 
+/**
+ *
+ * @param name
+ * @returns {boolean}
+ */
 function isValidName(name) {
     const nameRegExp = /^[a-zA-Zà-ÿÀ-ÿ\- ]{2,30}$/;
     return nameRegExp.test(name);
 }
 
+/**
+ *
+ * @param email
+ * @returns {boolean}
+ */
 function isValidEmail(email) {
-    const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailRegExp = /^[\w-][\w.-]*[\w-]@[\w-][\w.-]*[\w-].[a-z]{2,10}$/;
     return emailRegExp.test(email);
 }
 
+/**
+ *
+ * @param birthDate
+ * @returns {boolean}
+ */
 function isValidBirthDate(birthDate) {
     const birthDateRegExp = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     return birthDateRegExp.test(birthDate);
 }
 
+/**
+ *
+ * @param quantity
+ * @returns {boolean}
+ */
 function isValidQuantity(quantity) {
     const quantityRegEx = /^\d{1,2}$/;
     return quantityRegEx.test(quantity);
 }
 
+/**
+ *
+ * @param event
+ */
 function validateField(event) {
     const field = event.target;
     const fieldValidators = {
-        'first': { validator: isValidName, message: nameErrorMessage },
-        'last': { validator: isValidName, message: nameErrorMessage },
-        'mail': { validator: isValidEmail, message: "Veuillez entrer une adresse email valide." },
-        'birthdate': { validator: isValidBirthDate, message: "Veuillez entrer une date de naissance." },
-        'quantity': { validator: isValidQuantity, message: "Veuillez entrer un nombre entre 0 et 99." }
+        'first': { validator: isValidName, message: errorMessage.name },
+        'last': { validator: isValidName, message: errorMessage.name },
+        'mail': { validator: isValidEmail, message: errorMessage.email },
+        'birthdate': { validator: isValidBirthDate, message: errorMessage.birthdate },
+        'quantity': { validator: isValidQuantity, message: errorMessage.quantity }
     };
 
     const { validator, message } = fieldValidators[field.name];
