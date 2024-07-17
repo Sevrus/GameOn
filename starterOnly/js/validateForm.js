@@ -14,11 +14,7 @@ function validate() {
         { field: formData["last"], validator: isValidName, message: nameErrorMessage },
         { field: formData["mail"], validator: isValidEmail, message: "Veuillez entrer une adresse email valide." },
         { field: formData["birthdate"], validator: isValidBirthDate, message: "Veuillez entrer une date de naissance." },
-        {
-            field: formData["quantity"],
-            validator: value => !isNaN(value) && value !== '' && value.length <= 2,
-            message: "Veuillez entrer un nombre entre 0 et 99."
-        }
+        { field: formData["quantity"], validator: isValidQuantity, message: "Veuillez entrer un nombre entre 0 et 99." }
     ];
 
     fieldsToValidate.forEach(({ field, validator, message }) => {
@@ -85,6 +81,11 @@ function isValidBirthDate(birthDate) {
     return birthDateRegExp.test(birthDate);
 }
 
+function isValidQuantity(quantity) {
+    const quantityRegEx = /^\d{1,2}$/;
+    return quantityRegEx.test(quantity);
+}
+
 function validateField(event) {
     const field = event.target;
     const fieldValidators = {
@@ -92,7 +93,7 @@ function validateField(event) {
         'last': { validator: isValidName, message: nameErrorMessage },
         'mail': { validator: isValidEmail, message: "Veuillez entrer une adresse email valide." },
         'birthdate': { validator: isValidBirthDate, message: "Veuillez entrer une date de naissance." },
-        'quantity': { validator: value => !isNaN(value) && value !== '' && value.length <= 2, message: "Veuillez entrer un nombre entre 0 et 99." }
+        'quantity': { validator: isValidQuantity, message: "Veuillez entrer un nombre entre 0 et 99." }
     };
 
     const { validator, message } = fieldValidators[field.name];

@@ -51,7 +51,7 @@ function displayConfirmation() {
 
   document.querySelector(".close-modal-btn").addEventListener("click", () => {
     hideModal();
-    form.reset(); // Reset form when confirmation modal is closed
+    form.reset();
   });
 }
 
