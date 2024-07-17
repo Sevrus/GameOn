@@ -1,134 +1,112 @@
 const form = document.getElementById("inscription-form");
 const formData = form.elements;
-const errorFields = document.querySelectorAll(".form-data small");
 const locationRadios = document.getElementsByName('location');
 const checkbox1 = document.getElementById("checkbox1");
 
-/**
- * Function to validate the form
- * @returns {boolean}
- */
+const nameErrorMessage = "Veuillez entrer 2 caractères ou plus.";
+const borderStyleError = "2px solid #ff4e60";
+const borderStyleValid = "2px solid #279e7a";
+
 function validate() {
-    clearErrors();
-
     let isValid = true;
-    const nameErrorMessage = "Veuillez entrer 2 caractères ou plus.";
-    const borderStyleError = "2px solid #ff4e60";
-    const borderStyleValid = "2px solid #279e7a";
-
-    if (!isValidName(formData["first"].value.trim())) {
-        setError(formData["first"], nameErrorMessage);
-        formData["first"].style.border=borderStyleError;
-        isValid = false;
-    } else {
-        formData["first"].style.border=borderStyleValid;
-    }
-
-    if (!isValidName(formData["last"].value.trim())) {
-        setError(formData["last"], nameErrorMessage);
-        formData["last"].style.border=borderStyleError;
-        isValid = false;
-    } else {
-        formData["last"].style.border=borderStyleValid;
-    }
-
-    if (!isValidEmail(formData["mail"].value.trim())) {
-        setError(formData["mail"], "Veuillez entrer une adresse email valide.");
-        formData["mail"].style.border=borderStyleError;
-        isValid = false;
-    } else {
-        formData["mail"].style.border=borderStyleValid;
-    }
-
-    if (!isValidBirthDate(formData["birthdate"].value.trim())) {
-        setError(formData["birthdate"], "Veuillez entrer une date de naissance.");
-        formData["birthdate"].style.border=borderStyleError;
-        isValid = false;
-    } else {
-        formData["birthdate"].style.border=borderStyleValid;
-    }
-
-    if (isNaN(formData["quantity"].value.trim()) || formData["quantity"].value.trim() === '') {
-        setError(formData["quantity"], "Veuillez entrer un nombre entre 0 et 99.");
-        formData["quantity"].style.border=borderStyleError;
-        isValid = false;
-    } else {
-        formData["quantity"].style.border=borderStyleValid;
-    }
-
-    let radioChecked = false;
-    for (const radio of locationRadios) {
-        if (radio.checked) {
-            radioChecked = true;
-            break;
+    const fieldsToValidate = [
+        { field: formData["first"], validator: isValidName, message: nameErrorMessage },
+        { field: formData["last"], validator: isValidName, message: nameErrorMessage },
+        { field: formData["mail"], validator: isValidEmail, message: "Veuillez entrer une adresse email valide." },
+        { field: formData["birthdate"], validator: isValidBirthDate, message: "Veuillez entrer une date de naissance." },
+        {
+            field: formData["quantity"],
+            validator: value => !isNaN(value) && value !== '' && value.length <= 2,
+            message: "Veuillez entrer un nombre entre 0 et 99."
         }
-    }
+    ];
+
+    fieldsToValidate.forEach(({ field, validator, message }) => {
+        if (!validator(field.value.trim())) {
+            setError(field, message);
+            field.style.border = borderStyleError;
+            isValid = false;
+        } else {
+            clearError(field);
+            field.style.border = borderStyleValid;
+        }
+    });
+
+    let radioChecked = Array.from(locationRadios).some(radio => radio.checked);
     if (!radioChecked) {
         setError(locationRadios, "Vous devez choisir une option.");
         isValid = false;
+    } else {
+        clearError(locationRadios);
     }
 
     if (!checkbox1.checked) {
         setError(checkbox1, "Vous devez accepter les conditions d'utilisation.");
         isValid = false;
+    } else {
+        clearError(checkbox1);
     }
 
     return isValid;
 }
 
-/**
- * Reset all error messages initially
- */
-function clearErrors() {
-    errorFields.forEach(error => error.textContent = "");
+function setError(field, message) {
+    let errorElement = getErrorElement(field);
+    errorElement.textContent = message;
 }
 
-/**
- * Function to set error message for a field
- * @param {HTMLElement} field
- * @param {string} message
- */
-function setError(field, message) {
+function clearError(field) {
+    let errorElement = getErrorElement(field);
+    errorElement.textContent = "";
+}
+
+function getErrorElement(field) {
     if (field === locationRadios) {
-        const errorLocationRadio = document.querySelector(".small-location");
-        errorLocationRadio.textContent = message;
-    } else if(field === checkbox1) {
-        const errorCheckbox = document.querySelector(".small-checkbox");
-        errorCheckbox.textContent = message;
+        return document.querySelector(".small-location");
+    } else if (field === checkbox1) {
+        return document.querySelector(".small-checkbox");
     } else {
-        let small = field.nextElementSibling;
-        small.textContent = message;
+        return field.nextElementSibling;
     }
 }
 
-/**
- * Function to validate name format
- * @param {string} name
- * @returns {boolean}
- */
 function isValidName(name) {
-    const nameRegExp = /^[a-zA-Zà-ÿÀ-ÿ\- ]{2,30}$/g;
+    const nameRegExp = /^[a-zA-Zà-ÿÀ-ÿ\- ]{2,30}$/;
     return nameRegExp.test(name);
 }
 
-/**
- * Function to validate email format
- * @param {string} email
- * @returns {boolean}
- */
 function isValidEmail(email) {
-    const emailRegExp = /^[a-zA-Z0-9_-][a-zA-Z0-9._-]*[a-zA-Z0-9_-]@[a-zA-Z0-9_-][a-zA-Z0-9._-]*[a-zA-Z0-9_-].[a-z]{2,10}$/g;
+    const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegExp.test(email);
 }
 
-/**
- * Function to validate birthdate format
- * @param {string} birthDate
- * @returns {boolean}
- */
 function isValidBirthDate(birthDate) {
     const birthDateRegExp = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     return birthDateRegExp.test(birthDate);
 }
+
+function validateField(event) {
+    const field = event.target;
+    const fieldValidators = {
+        'first': { validator: isValidName, message: nameErrorMessage },
+        'last': { validator: isValidName, message: nameErrorMessage },
+        'mail': { validator: isValidEmail, message: "Veuillez entrer une adresse email valide." },
+        'birthdate': { validator: isValidBirthDate, message: "Veuillez entrer une date de naissance." },
+        'quantity': { validator: value => !isNaN(value) && value !== '' && value.length <= 2, message: "Veuillez entrer un nombre entre 0 et 99." }
+    };
+
+    const { validator, message } = fieldValidators[field.name];
+    if (!validator(field.value.trim())) {
+        setError(field, message);
+        field.style.border = borderStyleError;
+    } else {
+        clearError(field);
+        field.style.border = borderStyleValid;
+    }
+}
+
+['first', 'last', 'mail', 'birthdate', 'quantity'].forEach(name => {
+    formData[name].addEventListener('input', validateField);
+});
 
 export { validate };

@@ -1,4 +1,4 @@
-import {validate} from "./validateForm.js";
+import { validate } from "./validateForm.js";
 
 const modalBg = document.querySelector(".background-modal");
 const closeModal = document.querySelector(".close");
@@ -49,7 +49,10 @@ function displayConfirmation() {
   <button class="btn-submit button close-modal-btn">Fermer</button>
   `;
 
-  document.querySelector(".close-modal-btn").addEventListener("click", hideModal);
+  document.querySelector(".close-modal-btn").addEventListener("click", () => {
+    hideModal();
+    form.reset(); // Reset form when confirmation modal is closed
+  });
 }
 
 /**
@@ -58,6 +61,7 @@ function displayConfirmation() {
 form.addEventListener('submit', function(event) {
   if (validate()) {
     event.preventDefault();
+    form.reset();
     displayConfirmation();
   } else {
     event.preventDefault();
