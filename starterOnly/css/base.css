@@ -18,4 +18,28 @@ body {
     align-items: center;
     max-width: 1440px;
     margin: 0 auto;
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: var(--font-size-base);
+}
+
+main {
+    width: 86%;
+    font-size: 130%;
+    font-weight: bolder;
+    color: #000;
+    text-align: justify;
+}
+
+p {
+    margin-bottom: 0;
+    padding: 0.5vw;
+}
+
+@media screen and (max-width: 950px) {
+    main {
+        width: 100%;
+        padding: 0 30px;
+    }
 }
