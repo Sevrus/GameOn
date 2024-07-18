@@ -19,7 +19,6 @@ body {
     max-width: 1440px;
     margin: 0 auto;
     font-family: "DM Sans", sans-serif;
-    font-optical-sizing: auto;
     font-style: normal;
     font-size: var(--font-size-base);
 }
@@ -34,7 +33,7 @@ main {
 
 p {
     margin-bottom: 0;
-    padding: 0.5vw;
+    padding: 0;
 }
 
 @media screen and (max-width: 950px) {

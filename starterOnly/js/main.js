@@ -5,6 +5,7 @@ const closeModal = document.querySelector(".close");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const form = document.getElementById("inscription-form");
 const navToggle = document.getElementById("nav-toggle");
+const targetMain = document.getElementsByTagName("main");
 
 /**
  * Event Listeners
@@ -45,7 +46,7 @@ function hideModal() {
 function displayConfirmation() {
   const modalBody = document.querySelector(".modal-body");
   modalBody.innerHTML = `
-  <p>Merci pour votre inscription</p>
+  <p class="confirm-message">Merci pour<br>votre inscription</p>
   <button class="btn-submit button close-modal-btn">Fermer</button>
   `;
 
