@@ -8,7 +8,7 @@ const borderStyleValid = "2px solid #279e7a";
 const errorMessage = {
     name: "Veuillez entrer 2 caractères ou plus.",
     email: "Veuillez entrer une adresse email valide.",
-    birthdate: "Veuillez entrer une date de naissance.",
+    birthdate: "Vous devez avoir 18 ans ou plus.",
     quantity: "Veuillez entrer un nombre entre 0 et 99.",
     location: "Vous devez choisir une option.",
     terms: "Vous devez accepter les conditions d'utilisation."
@@ -65,6 +65,24 @@ function validate() {
 }
 
 /**
+ * Function to validate if the date corresponds to a person who is at least 18 years old
+ * @param {string} birthDate - The birthdate in the format 'YYYY-MM-DD'
+ * @returns {boolean}
+ */
+export const isValidMajor = (birthDate) => {
+    const [year, month, day] = birthDate.split('-').map(Number);
+    const birthDateObj = new Date(year, month - 1, day);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDifference = today.getMonth() - birthDateObj.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+        age--;
+    }
+    return age >= 18;
+}
+
+/**
  * Set an error message for a field
  * @param {HTMLElement|NodeList} field
  * @param {string} message - The error message to display
@@ -117,7 +135,7 @@ const isValidEmail = email => regExp.email.test(email);
  * @param {string} birthDate - The birthdate to validate
  * @returns {boolean} - True if the birthdate is valid, otherwise false
  */
-const isValidBirthDate = birthDate => regExp.birthdate.test(birthDate);
+const isValidBirthDate = birthDate => isValidMajor(birthDate);
 
 /**
  * Validate if the quantity is in the correct format

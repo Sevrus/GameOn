@@ -52,7 +52,6 @@ function displayConfirmation() {
 
   document.querySelector(".close-modal-btn").addEventListener("click", () => {
     hideModal();
-    form.reset();
   });
 }
 
